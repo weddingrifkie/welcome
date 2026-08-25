@@ -17,7 +17,6 @@
       overflow-x: hidden;
     }
 
-    /* ===== BACKGROUND GRADASI EMAS ===== */
     .gold-bg {
       position: fixed;
       top: 0;
@@ -44,7 +43,6 @@
       100% { transform: translate(40px, 30px) scale(1.08) rotate(2deg); }
     }
 
-    /* ===== CONTAINER ===== */
     .container {
       max-width: 900px;
       margin: 0 auto;
@@ -53,7 +51,6 @@
       z-index: 2;
     }
 
-    /* ===== HERO SECTION ===== */
     .hero {
       text-align: center;
       padding: 50px 20px 30px;
@@ -117,7 +114,6 @@
       margin: 0 8px;
     }
 
-    /* ===== MUSIC PLAYER ===== */
     .music-player {
       display: flex;
       align-items: center;
@@ -143,7 +139,6 @@
       background: transparent;
     }
 
-    /* ===== CARD MENGAMBANG ===== */
     .card-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -209,7 +204,6 @@
       box-shadow: 0 6px 20px rgba(201, 168, 76, 0.2);
     }
 
-    /* ===== COUPLE ===== */
     .couple-special {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -250,7 +244,6 @@
       text-transform: uppercase;
     }
 
-    /* ===== COUNTDOWN ===== */
     .countdown-wrap {
       display: flex;
       justify-content: center;
@@ -281,7 +274,6 @@
       letter-spacing: 2px;
     }
 
-    /* ===== FORM ===== */
     .form-group {
       margin-bottom: 1.2rem;
       text-align: left;
@@ -322,7 +314,6 @@
 
     textarea { resize: vertical; }
 
-    /* ===== NAV ===== */
     .navbar {
       display: flex;
       justify-content: center;
@@ -412,7 +403,7 @@
     <a href="#" onclick="showPage('giftPage')">Hadiah</a>
   </div>
 
-  <!-- ===== HOME ===== -->
+  <!-- HOME -->
   <div id="homePage" class="page active">
     <div class="hero">
       <div class="ring-icon"><i class="fas fa-ring"></i></div>
@@ -456,7 +447,7 @@
     </div>
   </div>
 
-  <!-- ===== PASANGAN ===== -->
+  <!-- PASANGAN -->
   <div id="couplePage" class="page">
     <div style="text-align:center; margin-bottom:20px;">
       <h2 style="font-family:'Great Vibes',cursive; font-size:2.4rem; color:#c9a84c;">Pasangan</h2>
@@ -477,7 +468,7 @@
     <div class="back-link" onclick="showPage('homePage')"><i class="fas fa-arrow-left"></i> Kembali</div>
   </div>
 
-  <!-- ===== ACARA ===== -->
+  <!-- ACARA -->
   <div id="eventPage" class="page">
     <div style="text-align:center; margin-bottom:20px;">
       <h2 style="font-family:'Great Vibes',cursive; font-size:2.4rem; color:#c9a84c;">Acara</h2>
@@ -485,8 +476,8 @@
     </div>
     <div class="card" style="max-width:500px; margin:0 auto;">
       <div class="icon"><i class="fas fa-calendar-check"></i></div>
-      <h3 style="font-size:2rem;">Rabu, 2 Sep 2026</h3>
-      <p><i class="fas fa-map-pin"></i> Gedung Serbaguna, Bandung</p>
+      <h3 style="font-size:2rem;">Rabu, 2 September 2026</h3>
+      <p><i class="fas fa-map-pin"></i> KP. Cigembong, Desa Bojongpetir</p>
       <p style="font-size:0.8rem; color:#8a7a6a;">Akad: 09.00 | Resepsi: 10.00</p>
     </div>
     <div class="countdown-wrap">
@@ -498,7 +489,7 @@
     <div class="back-link" onclick="showPage('homePage')"><i class="fas fa-arrow-left"></i> Kembali</div>
   </div>
 
-  <!-- ===== UCAPAN ===== -->
+  <!-- UCAPAN -->
   <div id="messagePage" class="page">
     <div style="text-align:center; margin-bottom:20px;">
       <h2 style="font-family:'Great Vibes',cursive; font-size:2.4rem; color:#c9a84c;">Ucapan</h2>
@@ -518,7 +509,7 @@
     <div class="back-link" onclick="showPage('homePage')"><i class="fas fa-arrow-left"></i> Kembali</div>
   </div>
 
-  <!-- ===== HADIAH ===== -->
+  <!-- HADIAH -->
   <div id="giftPage" class="page">
     <div style="text-align:center; margin-bottom:20px;">
       <h2 style="font-family:'Great Vibes',cursive; font-size:2.4rem; color:#c9a84c;">Hadiah</h2>
@@ -553,24 +544,18 @@
     if (map[id] !== undefined) document.querySelectorAll('.navbar a')[map[id]].classList.add('active');
   }
 
-  // ===== COUNTDOWN =====
   const target = new Date('2026-09-02T09:00:00').getTime();
   function updateCountdown() {
     const now = Date.now();
     const diff = Math.max(0, target - now);
-    const d = Math.floor(diff / 86400000);
-    const h = Math.floor((diff % 86400000) / 3600000);
-    const m = Math.floor((diff % 3600000) / 60000);
-    const s = Math.floor((diff % 60000) / 1000);
-    document.getElementById('days').textContent = String(d).padStart(2, '0');
-    document.getElementById('hours').textContent = String(h).padStart(2, '0');
-    document.getElementById('minutes').textContent = String(m).padStart(2, '0');
-    document.getElementById('seconds').textContent = String(s).padStart(2, '0');
+    document.getElementById('days').textContent = String(Math.floor(diff / 86400000)).padStart(2, '0');
+    document.getElementById('hours').textContent = String(Math.floor((diff % 86400000) / 3600000)).padStart(2, '0');
+    document.getElementById('minutes').textContent = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+    document.getElementById('seconds').textContent = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
   }
   setInterval(updateCountdown, 1000);
   updateCountdown();
 
-  // ===== UCAPAN =====
   document.getElementById('btnKirimUcapan').addEventListener('click', function() {
     const nama = document.getElementById('namaUcapan').value.trim();
     const ucapan = document.getElementById('isiUcapan').value.trim();
