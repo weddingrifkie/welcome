@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Rifkie & Nurani | Wedding</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #faf8f5;
+      color: #2d2d2d;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    /* Liquid Background */
+    .liquid-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      background: linear-gradient(135deg, #faf8f5 0%, #e8f4f8 50%, #faf8f5 100%);
+      overflow: hidden;
+    }
+
+    .liquid-bg::before {
+      content: '';
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      top: -50%;
+      left: -50%;
+      background: radial-gradient(circle at 30% 40%, rgba(168, 216, 234, 0.15) 0%, transparent 60%),
+                  radial-gradient(circle at 70% 60%, rgba(201, 168, 76, 0.08) 0%, transparent 50%);
+      animation: liquidMove 12s ease-in-out infinite alternate;
+    }
+
+    .liquid-bg::after {
+      content: '';
+      position: absolute;
+      width: 150%;
+      height: 150%;
+      top: -25%;
+      left: -25%;
+      background: radial-gradient(circle at 60% 30%, rgba(201, 168, 76, 0.05) 0%, transparent 50%);
+      animation: liquidMove2 15s ease-in-out infinite alternate;
+    }
+
+    @keyframes liquidMove {
+      0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+      100% { transform: translate(30px, 20px) scale(1.05) rotate(3deg); }
+    }
+
+    @keyframes liquidMove2 {
+      0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+      100% { transform: translate(-20px, 30px) scale(1.08) rotate(-2deg); }
+    }
+
+    .container {
+      max-width: 800px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 40px;
+      border: 1px solid rgba(201, 168, 76, 0.12);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.04);
+      padding: 2.5rem 2rem;
+      z-index: 10;
+      position: relative;
+      animation: fadeUp 0.8s ease-out;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ANIMASI SCROLL FROM BOTTOM TO TOP */
+    .scroll-animate {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .scroll-animate.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* MUSIC PLAYER */
+    .music-player {
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 60px;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid rgba(201, 168, 76, 0.15);
+      max-width: 280px;
+      margin: 0 auto 20px;
+    }
+
+    .music-player i {
+      color: #c9a84c;
+      font-size: 1.2rem;
+    }
+
+    .music-player .title {
+      font-size: 0.7rem;
+      color: #4a3a2a;
+      font-weight: 600;
+    }
+
+    .music-player iframe {
+      border-radius: 20px;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .nav-brand {
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.5rem;
+      color: #c9a84c;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-brand i { color: #a8d8ea; font-size: 1.2rem; }
+
+    .nav-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: #6a5a4a;
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 30px;
+      transition: 0.3s;
+      border: 1px solid transparent;
+    }
+
+    .nav-links a:hover {
+      background: rgba(201, 168, 76, 0.08);
+      border-color: #c9a84c;
+      color: #c9a84c;
+    }
+
+    .nav-links a.active {
+      background: rgba(201, 168, 76, 0.12);
+      border-color: #c9a84c;
+      color: #c9a84c;
+    }
+
+    .page { display: none; animation: fadeUp 0.5s ease; }
+    .page.active { display: block; }
+
+    .home-content, .couple-content, .event-content, .message-content, .gift-content {
+      text-align: center;
+    }
+
+    .ring-icon { font-size: 3rem; color: #c9a84c; margin-bottom: 10px; }
+
+    .judul-home {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.8rem;
+      color: #c9a84c;
+      margin-bottom: 5px;
+    }
+
+    .names {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.2rem;
+      color: #2d2d2d;
+      margin: 10px 0;
+    }
+
+    .names span { color: #c9a84c; }
+
+    .subtitle {
+      font-size: 0.8rem;
+      color: #6a5a4a;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      font-weight: 300;
+    }
+
+    .motto {
+      font-size: 1rem;
+      font-style: italic;
+      color: #4a3a2a;
+      padding: 16px 20px;
+      border-top: 1px solid rgba(201, 168, 76, 0.1);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+      max-width: 550px;
+      margin: 20px auto;
+      font-weight: 300;
+    }
+
+    .motto i { color: #a8d8ea; margin: 0 6px; }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #c9a84c, #b89530);
+      border: none;
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 14px 28px;
+      border-radius: 60px;
+      width: 100%;
+      max-width: 350px;
+      margin: 15px auto 0;
+      cursor: pointer;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 4px 15px rgba(201, 168, 76, 0.2);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(201, 168, 76, 0.3);
+    }
+
+    .btn-secondary {
+      background: rgba(168, 216, 234, 0.15);
+      border: 1px solid rgba(168, 216, 234, 0.2);
+      color: #4a3a2a;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 12px 24px;
+      border-radius: 60px;
+      width: 100%;
+      max-width: 350px;
+      margin: 10px auto 0;
+      cursor: pointer;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn-secondary:hover { background: rgba(168, 216, 234, 0.25); }
+
+    .header { text-align: center; margin-bottom: 25px; }
+
+    .header h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.2rem;
+      color: #c9a84c;
+    }
+
+    .header .sub {
+      font-size: 0.7rem;
+      background: rgba(201, 168, 76, 0.08);
+      border: 1px solid rgba(201, 168, 76, 0.1);
+      padding: 5px 16px;
+      border-radius: 40px;
+      display: inline-block;
+      margin-top: 10px;
+      color: #6a5a4a;
+    }
+
+    .couple-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 25px 0;
+    }
+
+    .couple-card {
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 24px;
+      padding: 20px;
+      border: 1px solid rgba(201, 168, 76, 0.08);
+      transition: 0.3s;
+    }
+
+    .couple-card:hover { border-color: #c9a84c; transform: translateY(-3px); }
+
+    .couple-card .avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 12px;
+      border: 3px solid #c9a84c;
+    }
+
+    .couple-card .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .couple-card .name {
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.5rem;
+      color: #c9a84c;
+    }
+
+    .couple-card .role {
+      font-size: 0.7rem;
+      color: #6a5a4a;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .event-info {
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 24px;
+      padding: 20px;
+      margin: 20px 0;
+      border: 1px solid rgba(201, 168, 76, 0.08);
+    }
+
+    .event-info .date {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2rem;
+      color: #c9a84c;
+    }
+
+    .event-info .place { font-size: 0.9rem; color: #4a3a2a; margin: 8px 0; }
+
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .countdown-item {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 16px;
+      padding: 12px 20px;
+      min-width: 60px;
+      border: 1px solid rgba(201, 168, 76, 0.08);
+    }
+
+    .countdown-item .num {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2rem;
+      color: #c9a84c;
+    }
+
+    .countdown-item .label {
+      font-size: 0.6rem;
+      color: #6a5a4a;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .form-group { margin-bottom: 1.2rem; text-align: left; }
+
+    .form-group label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 6px;
+      color: #4a3a2a;
+    }
+
+    .form-group label i { width: 22px; color: #c9a84c; }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(201, 168, 76, 0.15);
+      border-radius: 14px;
+      color: #2d2d2d;
+      font-size: 0.95rem;
+      outline: none;
+      transition: 0.2s;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #c9a84c;
+      box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.08);
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    textarea { resize: vertical; }
+
+    .back-link {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 0.75rem;
+      color: #6a5a4a;
+      cursor: pointer;
+      transition: 0.2s;
+      display: block;
+    }
+
+    .back-link:hover { color: #c9a84c; }
+    .back-link i { margin-right: 6px; }
+
+    .credit {
+      text-align: center;
+      margin-top: 25px;
+      font-size: 0.6rem;
+      color: #8a7a6a;
+      border-top: 1px solid rgba(201, 168, 76, 0.05);
+      padding-top: 16px;
+    }
+
+    .credit i { color: #c9a84c; margin: 0 4px; }
+
+    @media (max-width: 600px) {
+      .container { padding: 1.5rem 1.2rem; }
+      .judul-home { font-size: 2rem; }
+      .names { font-size: 1.6rem; }
+      .couple-grid { grid-template-columns: 1fr; }
+      .music-player { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="liquid-bg"></div>
+
+<div class="container">
+
+  <!-- MUSIC PLAYER (LAGU SUNDA) -->
+  <div class="music-player scroll-animate" id="musicPlayer">
+    <i class="fas fa-music"></i>
+    <span class="title">🎵 Lagu Sunda</span>
+    <iframe width="160" height="30" src="https://www.youtube.com/embed/uLhh5d-E6Tg?autoplay=1&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </div>
+
+  <!-- NAVBAR -->
+  <div class="navbar scroll-animate" id="navbar">
+    <div class="nav-brand">
+      <i class="fas fa-ring"></i> R & N
+    </div>
+    <div class="nav-links">
+      <a href="#" class="active" onclick="showPage('homePage')">Home</a>
+      <a href="#" onclick="showPage('couplePage')">Pasangan</a>
+      <a href="#" onclick="showPage('eventPage')">Acara</a>
+      <a href="#" onclick="showPage('messagePage')">Ucapan</a>
+      <a href="#" onclick="showPage('giftPage')">Hadiah</a>
+    </div>
+  </div>
+
+  <!-- HOME -->
+  <div id="homePage" class="page active">
+    <div class="home-content">
+      <div class="ring-icon scroll-animate"><i class="fas fa-ring"></i></div>
+      <div class="judul-home scroll-animate">Save The Date</div>
+      <div class="names scroll-animate">
+        Rifkie <span>&</span> Nurani
+      </div>
+      <div class="subtitle scroll-animate">We're Getting Married</div>
+      <div class="motto scroll-animate">
+        <i class="fas fa-quote-left"></i>
+        "Dua hati menjadi satu, mengalir dalam cinta yang abadi."
+        <i class="fas fa-quote-right"></i>
+      </div>
+      <button class="btn-primary scroll-animate" onclick="showPage('eventPage')">
+        <i class="fas fa-calendar-check"></i> Lihat Acara
+      </button>
+    </div>
+  </div>
+
+  <!-- PASANGAN -->
+  <div id="couplePage" class="page">
+    <div class="header">
+      <h1><i class="fas fa-heart"></i> Pasangan</h1>
+      <div class="sub">Mempelai</div>
+    </div>
+    <div class="couple-grid">
+      <div class="couple-card scroll-animate">
+        <div class="avatar"><img src="https://placehold.co/100x100/c9a84c/fff?text=R" alt="Rifkie"></div>
+        <div class="name">Rifkie Septian Surya</div>
+        <div class="role">Mempelai Pria</div>
+      </div>
+      <div class="couple-card scroll-animate">
+        <div class="avatar"><img src="https://placehold.co/100x100/c9a84c/fff?text=N" alt="Nurani"></div>
+        <div class="name">Nurani</div>
+        <div class="role">Mempelai Wanita</div>
+      </div>
+    </div>
+    <div class="back-link" onclick="showPage('homePage')">
+      <i class="fas fa-arrow-left"></i> Kembali
+    </div>
+  </div>
+
+  <!-- ACARA -->
+  <div id="eventPage" class="page">
+    <div class="header">
+      <h1><i class="fas fa-calendar-alt"></i> Acara</h1>
+      <div class="sub">Pernikahan</div>
+    </div>
+    <div class="event-info scroll-animate">
+      <div class="date">Sabtu, 20 Desember 2025</div>
+      <div class="place"><i class="fas fa-map-pin"></i> Gedung Serbaguna, Bandung</div>
+      <div class="place" style="font-size:0.8rem; color:#6a5a4a;">Akad Nikah: 09.00 WIB | Resepsi: 10.00 WIB</div>
+    </div>
+    <div class="countdown scroll-animate" id="countdown">
+      <div class="countdown-item"><div class="num" id="days">00</div><div class="label">Hari</div></div>
+      <div class="countdown-item"><div class="num" id="hours">00</div><div class="label">Jam</div></div>
+      <div class="countdown-item"><div class="num" id="minutes">00</div><div class="label">Menit</div></div>
+      <div class="countdown-item"><div class="num" id="seconds">00</div><div class="label">Detik</div></div>
+    </div>
+    <div class="back-link" onclick="showPage('homePage')">
+      <i class="fas fa-arrow-left"></i> Kembali
+    </div>
+  </div>
+
+  <!-- UCAPAN -->
+  <div id="messagePage" class="page">
+    <div class="header">
+      <h1><i class="fas fa-comment-dots"></i> Ucapan</h1>
+      <div class="sub">Kirim Doa & Ucapan</div>
+    </div>
+    <div class="form-group scroll-animate">
+      <label><i class="fas fa-user"></i> Nama</label>
+      <input type="text" id="namaUcapan" placeholder="Nama Anda">
+    </div>
+    <div class="form-group scroll-animate">
+      <label><i class="fas fa-comment"></i> Ucapan</label>
+      <textarea id="isiUcapan" rows="3" placeholder="Tulis ucapan & doa..."></textarea>
+    </div>
+    <button class="btn-primary scroll-animate" id="btnKirimUcapan">
+      <i class="fas fa-paper-plane"></i> Kirim Ucapan
+    </button>
+    <div class="back-link" onclick="showPage('homePage')">
+      <i class="fas fa-arrow-left"></i> Kembali
+    </div>
+  </div>
+
+  <!-- HADIAH -->
+  <div id="giftPage" class="page">
+    <div class="header">
+      <h1><i class="fas fa-gift"></i> Hadiah</h1>
+      <div class="sub">Kirim Hadiah Pernikahan</div>
+    </div>
+    <div class="scroll-animate" style="background:rgba(255,255,255,0.4); border-radius:24px; padding:20px; border:1px solid rgba(201,168,76,0.08);">
+      <p style="color:#4a3a2a; margin-bottom:15px;">
+        <i class="fas fa-heart" style="color:#c9a84c;"></i>
+        Doa dan kehadiran Anda adalah hadiah terbaik.
+      </p>
+      <div style="display:flex; flex-direction:column; gap:10px; align-items:center;">
+        <div style="background:rgba(255,255,255,0.5); border-radius:16px; padding:12px 20px; width:100%; text-align:center; border:1px solid rgba(201,168,76,0.08);">
+          <i class="fas fa-university" style="color:#c9a84c;"></i>
+          <span style="font-weight:600; color:#4a3a2a;"> BCA: 1234567890</span>
+          <span style="display:block; font-size:0.7rem; color:#6a5a4a;">a.n. Rifkie Septian Surya</span>
+        </div>
+        <div style="background:rgba(255,255,255,0.5); border-radius:16px; padding:12px 20px; width:100%; text-align:center; border:1px solid rgba(201,168,76,0.08);">
+          <i class="fas fa-mobile-alt" style="color:#c9a84c;"></i>
+          <span style="font-weight:600; color:#4a3a2a;"> DANA: 081234567890</span>
+          <span style="display:block; font-size:0.7rem; color:#6a5a4a;">a.n. Nurani</span>
+        </div>
+      </div>
+    </div>
+    <div class="back-link" onclick="showPage('homePage')">
+      <i class="fas fa-arrow-left"></i> Kembali
+    </div>
+  </div>
+
+  <div class="credit scroll-animate">
+    <i class="fas fa-copyright"></i> 2025 • Rifkie & Nurani
+  </div>
+</div>
+
+<script>
+  // ===== NAVIGASI =====
+  function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+
+    document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active'));
+    const links = document.querySelectorAll('.nav-links a');
+    const map = { homePage: 0, couplePage: 1, eventPage: 2, messagePage: 3, giftPage: 4 };
+    if (map[pageId] !== undefined) links[map[pageId]].classList.add('active');
+  }
+
+  // ===== SCROLL ANIMATION (BOTTOM TO TOP) =====
+  function handleScrollAnimation() {
+    const elements = document.querySelectorAll('.scroll-animate');
+    elements.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      const trigger = window.innerHeight - 80;
+      if (rect.top < trigger) {
+        el.classList.add('visible');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', handleScrollAnimation);
+  window.addEventListener('load', handleScrollAnimation);
+
+  // ===== COUNTDOWN =====
+  const weddingDate = new Date('2025-12-20T09:00:00').getTime();
+
+  function updateCountdown() {
+    const now = new Date().getTime();
+    const diff = weddingDate - now;
+    if (diff <= 0) {
+      document.getElementById('days').textContent = '00';
+      document.getElementById('hours').textContent = '00';
+      document.getElementById('minutes').textContent = '00';
+      document.getElementById('seconds').textContent = '00';
+      return;
+    }
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    document.getElementById('days').textContent = String(days).padStart(2, '0');
+    document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+    document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+    document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+  }
+
+  setInterval(updateCountdown, 1000);
+  updateCountdown();
+
+  // ===== UCAPAN =====
+  document.getElementById('btnKirimUcapan').addEventListener('click', function() {
+    const nama = document.getElementById('namaUcapan').value.trim();
+    const ucapan = document.getElementById('isiUcapan').value.trim();
+    if (!nama || !ucapan) {
+      alert('Isi nama & ucapan dulu!');
+      return;
+    }
+    alert('Terima kasih, ' + nama + '!\nUcapan Anda telah terkirim.');
+    document.getElementById('namaUcapan').value = '';
+    document.getElementById('isiUcapan').value = '';
+  });
+
+  console.log('💍 Website Pernikahan Rifkie & Nurani siap!');
+</script>
+</body>
+  </html>
