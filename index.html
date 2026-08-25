@@ -51,6 +51,30 @@
       z-index: 2;
     }
 
+    /* ===== AUDIO AUTO PLAY (TANPA TOMBOL) ===== */
+    .audio-wrapper {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+      opacity: 0.3;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .audio-wrapper:hover {
+      opacity: 1;
+    }
+
+    .audio-wrapper i {
+      font-size: 2rem;
+      color: #c9a84c;
+    }
+
+    .audio-wrapper audio {
+      display: none;
+    }
+
     .hero {
       text-align: center;
       padding: 50px 20px 30px;
@@ -112,31 +136,6 @@
     .hero .motto i {
       color: #c9a84c;
       margin: 0 8px;
-    }
-
-    .music-player {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      background: rgba(201, 168, 76, 0.04);
-      border: 1px solid rgba(201, 168, 76, 0.1);
-      border-radius: 60px;
-      padding: 8px 20px;
-      max-width: 320px;
-      margin: 20px auto 30px;
-    }
-
-    .music-player i {
-      color: #c9a84c;
-      font-size: 1.2rem;
-    }
-
-    .music-player audio {
-      width: 180px;
-      height: 30px;
-      border-radius: 30px;
-      background: transparent;
     }
 
     .card-grid {
@@ -383,8 +382,6 @@
       .hero .judul { font-size: 2.6rem; }
       .hero .nama { font-size: 2rem; }
       .couple-special { grid-template-columns: 1fr; }
-      .music-player { flex-wrap: wrap; justify-content: center; }
-      .music-player audio { width: 100%; }
       .card-grid { grid-template-columns: 1fr; }
     }
   </style>
@@ -394,6 +391,15 @@
 <div class="gold-bg"></div>
 
 <div class="container">
+
+  <!-- ===== AUDIO AUTO PLAY (TANPA TOMBOL) ===== -->
+  <div class="audio-wrapper">
+    <i class="fas fa-music"></i>
+    <audio id="laguKawinan" loop>
+      <source src="kawinan.mp3" type="audio/mpeg">
+      Browser tidak mendukung audio.
+    </audio>
+  </div>
 
   <div class="navbar">
     <a href="#" class="active" onclick="showPage('homePage')">Home</a>
@@ -415,14 +421,6 @@
         "Dua hati menjadi satu, mengalir dalam cinta yang abadi."
         <i class="fas fa-quote-right"></i>
       </div>
-    </div>
-
-    <div class="music-player">
-      <i class="fas fa-music"></i>
-      <audio controls>
-        <source src="musik-nikah.mp3" type="audio/mpeg">
-        Browser tidak mendukung audio.
-      </audio>
     </div>
 
     <div class="card-grid">
@@ -536,6 +534,23 @@
 </div>
 
 <script>
+  // ===== AUTO PLAY AUDIO =====
+  const audio = document.getElementById('laguKawinan');
+
+  function playAudio() {
+    audio.play().catch(() => {
+      // Fallback: play setelah user klik di mana saja
+      document.addEventListener('click', function playOnClick() {
+        audio.play();
+        document.removeEventListener('click', playOnClick);
+      }, { once: true });
+    });
+  }
+
+  // Jalankan auto play setelah halaman load
+  window.addEventListener('load', playAudio);
+
+  // ===== NAVIGASI =====
   function showPage(id) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById(id).classList.add('active');
@@ -544,6 +559,7 @@
     if (map[id] !== undefined) document.querySelectorAll('.navbar a')[map[id]].classList.add('active');
   }
 
+  // ===== COUNTDOWN =====
   const target = new Date('2026-09-02T09:00:00').getTime();
   function updateCountdown() {
     const now = Date.now();
@@ -556,6 +572,7 @@
   setInterval(updateCountdown, 1000);
   updateCountdown();
 
+  // ===== UCAPAN =====
   document.getElementById('btnKirimUcapan').addEventListener('click', function() {
     const nama = document.getElementById('namaUcapan').value.trim();
     const ucapan = document.getElementById('isiUcapan').value.trim();
@@ -568,4 +585,4 @@
   console.log('💍 Rifkie & Nurani wedding website siap!');
 </script>
 </body>
-</html>
+  </html>
