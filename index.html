@@ -51,7 +51,6 @@
       z-index: 2;
     }
 
-    /* ===== AUDIO AUTO PLAY (TANPA TOMBOL) ===== */
     .audio-wrapper {
       position: fixed;
       bottom: 20px;
@@ -121,21 +120,23 @@
       font-weight: 300;
     }
 
-    .hero .motto {
-      font-size: 1.05rem;
-      font-style: italic;
+    /* ===== TEKS UNDANGAN ===== */
+    .hero .undangan-text {
+      font-size: 1rem;
       color: #d4c5a0;
-      max-width: 500px;
+      max-width: 550px;
       margin: 25px auto 0;
       padding: 18px 0;
       border-top: 1px solid rgba(201, 168, 76, 0.12);
       border-bottom: 1px solid rgba(201, 168, 76, 0.12);
       font-weight: 300;
+      line-height: 1.8;
+      font-style: italic;
     }
 
-    .hero .motto i {
+    .hero .undangan-text i {
       color: #c9a84c;
-      margin: 0 8px;
+      margin: 0 6px;
     }
 
     .card-grid {
@@ -392,7 +393,7 @@
 
 <div class="container">
 
-  <!-- ===== AUDIO AUTO PLAY (TANPA TOMBOL) ===== -->
+  <!-- AUDIO AUTO PLAY -->
   <div class="audio-wrapper">
     <i class="fas fa-music"></i>
     <audio id="laguKawinan" loop>
@@ -416,9 +417,12 @@
       <div class="judul">Save The Date</div>
       <div class="nama">Rifkie <span>&</span> Nurani</div>
       <div class="sub">We're Getting Married</div>
-      <div class="motto">
+
+      <!-- TEKS UNDANGAN -->
+      <div class="undangan-text">
         <i class="fas fa-quote-left"></i>
-        "Dua hati menjadi satu, mengalir dalam cinta yang abadi."
+        Dengan memohon rahmat dan ridho Allah SWT, 
+        kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami.
         <i class="fas fa-quote-right"></i>
       </div>
     </div>
@@ -534,12 +538,10 @@
 </div>
 
 <script>
-  // ===== AUTO PLAY AUDIO =====
   const audio = document.getElementById('laguKawinan');
 
   function playAudio() {
     audio.play().catch(() => {
-      // Fallback: play setelah user klik di mana saja
       document.addEventListener('click', function playOnClick() {
         audio.play();
         document.removeEventListener('click', playOnClick);
@@ -547,10 +549,8 @@
     });
   }
 
-  // Jalankan auto play setelah halaman load
   window.addEventListener('load', playAudio);
 
-  // ===== NAVIGASI =====
   function showPage(id) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById(id).classList.add('active');
@@ -559,7 +559,6 @@
     if (map[id] !== undefined) document.querySelectorAll('.navbar a')[map[id]].classList.add('active');
   }
 
-  // ===== COUNTDOWN =====
   const target = new Date('2026-09-02T09:00:00').getTime();
   function updateCountdown() {
     const now = Date.now();
@@ -572,7 +571,6 @@
   setInterval(updateCountdown, 1000);
   updateCountdown();
 
-  // ===== UCAPAN =====
   document.getElementById('btnKirimUcapan').addEventListener('click', function() {
     const nama = document.getElementById('namaUcapan').value.trim();
     const ucapan = document.getElementById('isiUcapan').value.trim();
@@ -585,4 +583,4 @@
   console.log('💍 Rifkie & Nurani wedding website siap!');
 </script>
 </body>
-  </html>
+</html>
